@@ -6,8 +6,8 @@ import time
 # Quantum imports
 from qiskit import Aer
 from qiskit import QuantumCircuit, ClassicalRegister, QuantumRegister
-from qiskit import execute, register, get_backend, compile
-from qiskit.tools.visualization import plot_histogram, circuit_drawer
+from qiskit import execute
+from qiskit.tools.visualization import plot_histogram
 import Qconfig
 from PyQt5 import QtWidgets, QtGui
 import QGui as MyDialog
@@ -52,11 +52,11 @@ class DemoUi(QtWidgets.QMainWindow):
             return x, 0, math.gcd(x, N), N / math.gcd(x, N)
 
         periode = self.find_period_classical(x, N)  # step two find the period (Classical bottleneck)
-        while periode % 2 != 0:
+        while periode % 2 != 0: # step three check if it's an even number otherwise pick another number
             periode = self.find_period_classical(x, N)
 
-        factor_p = math.gcd(x ** int(periode / 2) + 1, N)  # step three compute the factor
-        factor_q = math.gcd(x ** int(periode / 2) - 1, N)  # step three compute the factor
+        factor_p = math.gcd(x ** int(periode / 2) + 1, N)  # step four compute the factor
+        factor_q = math.gcd(x ** int(periode / 2) - 1, N)  # step four compute the factor
 
         self.ui.c_period_label.setText(str(periode))
         self.ui.c_upper_factor_label.setText(str(factor_p))
@@ -141,37 +141,37 @@ class DemoUi(QtWidgets.QMainWindow):
 
         # Apply a**4 mod 15
         qc.h(qr[4])
-        #   controlled identity on the remaining 4 qubits, which is equivalent to doing nothing
+        # controlled identity on the remaining 4 qubits, which is equivalent to doing nothing
         qc.h(qr[4])
-        #   measure
+        # measure
         qc.measure(qr[4], cr[0])
-        #   reinitialise q[4] to |0>
+        # reinitialise q[4] to |0>
         qc.reset(qr[4])
 
         # Apply a**2 mod 15
         qc.h(qr[4])
-        #   controlled identity on the remaining 4 qubits, which is equivalent to doing nothing
-        #   feed forward
+        # controlled identity on the remaining 4 qubits, which is equivalent to doing nothing
+        # feed forward
         if cr[0] == 1:
             qc.u1(math.pi / 2., qr[4])
         qc.h(qr[4])
-        #   measure
+        # measure
         qc.measure(qr[4], cr[1])
-        #   reinitialise q[4] to |0>
+        # reinitialise q[4] to |0>
         qc.reset(qr[4])
 
         # Apply 11 mod 15
         qc.h(qr[4])
-        #   controlled unitary.
+        # controlled unitary.
         qc.cx(qr[4], qr[3])
         qc.cx(qr[4], qr[1])
-        #   feed forward
+        # feed forward
         if cr[1] == 1:
             qc.u1(math.pi / 2., qr[4])
         if cr[0] == 1:
             qc.u1(math.pi / 4., qr[4])
         qc.h(qr[4])
-        #   measure
+        # measure
         qc.measure(qr[4], cr[2])
 
 
@@ -188,9 +188,11 @@ class DemoUi(QtWidgets.QMainWindow):
         backend = Aer.get_backend('qasm_simulator')
         sim_job = execute([shor], backend)
         sim_result = sim_job.result()
+
+        legend = ['First execution']
         sim_data = sim_result.get_counts(shor)
-        plot_histogram(sim_data)
-        circuit_drawer(shor)
+        data = {'00000': 272, '00100': 251, '00010': 256, '00110': 245}
+        plot_histogram([data], legend=legend)
         self.ui.q_period_label.setText(str(len(sim_data)))
 
         time_diff = time.time() - start_time
