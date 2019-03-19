@@ -8,9 +8,8 @@ from qiskit import Aer
 from qiskit import QuantumCircuit, ClassicalRegister, QuantumRegister
 from qiskit import execute
 from qiskit.tools.visualization import plot_histogram
-import Qconfig
 from PyQt5 import QtWidgets, QtGui
-import QGui as MyDialog
+from PyQtExample import QGui as MyDialog
 
 
 class DemoUi(QtWidgets.QMainWindow):
@@ -189,10 +188,8 @@ class DemoUi(QtWidgets.QMainWindow):
         sim_job = execute([shor], backend)
         sim_result = sim_job.result()
 
-        legend = ['First execution']
         sim_data = sim_result.get_counts(shor)
-        data = {'00000': 272, '00100': 251, '00010': 256, '00110': 245}
-        plot_histogram([data], legend=legend)
+        plot_histogram([sim_data]).show()
         self.ui.q_period_label.setText(str(len(sim_data)))
 
         time_diff = time.time() - start_time
