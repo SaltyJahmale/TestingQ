@@ -95,6 +95,6 @@ fabric.properties
 
 ### API file
 # Ignore the API file witch is always specific to the user
-QConfig.py
+Qconfig.txt
 
 # End of https://www.gitignore.io/api/pycharm,visualstudiocode

@@ -2,7 +2,6 @@ from qiskit.tools.visualization import plot_histogram
 from qiskit import QuantumCircuit, ClassicalRegister, QuantumRegister
 from qiskit import execute, IBMQ, BasicAer
 import math
-import Qconfig
 
 q = QuantumRegister(7)
 c = ClassicalRegister(3)
@@ -10,6 +9,8 @@ c = ClassicalRegister(3)
 # Comment this if run on a simulator
 # Account token
 # IBMQ.enable_account(Qconfig.APItoken, url=Qconfig.config['url'])
+# IBMQ.save_account('MY_API_TOKEN', url='https://...')
+
 
 # Comment this if run on a simulator
 # Specifically tell to pick this backend
@@ -46,6 +47,4 @@ shor.measure(q[2], c[2])
 backend = BasicAer.get_backend('qasm_simulator')
 job = execute(shor, backend).result()
 data = job.get_counts(shor)
-print(data)
-
-plot_histogram(data)
+plot_histogram(data).show()
