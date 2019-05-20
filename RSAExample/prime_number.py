@@ -1,7 +1,7 @@
 import random
 
 
-def rabinMiller(num):
+def rabin_miller(num):
     # Returns True if num is a prime number.
     s = num - 1
     t = 0
@@ -26,7 +26,7 @@ def rabinMiller(num):
         return True
 
 
-def isPrime(num):
+def is_prime(num):
     # Return True if num is a prime number. This function does a quicker
     # prime number check before calling rabinMiller().
 
@@ -38,7 +38,7 @@ def isPrime(num):
     # than rabinMiller(), but unlike rabinMiller() is not guaranteed to
     # prove that a number is prime.
 
-    lowPrimes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101,
+    low_primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101,
                  103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199,
                  211, 223, 227, 229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281, 283, 293, 307, 311, 313, 317,
                  331, 337, 347, 349, 353, 359, 367, 373, 379, 383, 389, 397, 401, 409, 419, 421, 431, 433, 439, 443,
@@ -48,21 +48,21 @@ def isPrime(num):
                  853, 857, 859, 863, 877, 881, 883, 887, 907, 911, 919, 929, 937, 941, 947, 953, 967, 971, 977, 983,
                  991, 997]
 
-    if num in lowPrimes:
+    if num in low_primes:
         return True
     # See if any of the low prime numbers can divide num
 
-    for prime in lowPrimes:
+    for prime in low_primes:
         if num % prime == 0:
             return False
 
     # If all else fails, call rabinMiller() to determine if num is a prime.
-    return rabinMiller(num)
+    return rabin_miller(num)
 
 
-def generateLargePrime(keysize=1024):
+def generate_large_prime(key_size=1024):
     # Return a random prime number of keysize bits in size.
     while True:
-        num = random.randrange(2 ** (keysize - 1), 2 ** (keysize))
-        if isPrime(num):
+        num = random.randrange(2 ** (key_size - 1), 2 ** (key_size))
+        if is_prime(num):
             return num
