@@ -3,13 +3,14 @@ from matplotlib import pyplot
 # import numpy as np
 from random import randint
 from math import gcd
-
+import time
 
 setup = """
 from random import randint
 from math import gcd
 from __main__ import find_period_classical
  """
+start = time.time()
 
 def find_period_classical(a, N):
     n = 1
@@ -38,9 +39,8 @@ def shors_algorithm_classical(N):
 
 
 if __name__ == '__main__':
-
-    a = shors_algorithm_classical(42459479)
-    print(a)
+    print(shors_algorithm_classical(42459479))
+    print(time.time() - start)
     # x = ['1','2','3', ]
     # y = ['1','4','9', ]
     #
