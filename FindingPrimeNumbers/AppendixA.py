@@ -17,10 +17,7 @@ def prime_factors(n):
 
 if __name__ == '__main__':
     print(prime_factors(42459479))
-    print(start)
-    print(time.time())
-    end = time.time() - start
-    print(end)
+    print(time.time() - start)
 
     # times = timeit.Timer("prime_factors(15)", setup=setup)
     # print("Prime_factors ran:", times.timeit(number=100), "milliseconds")
